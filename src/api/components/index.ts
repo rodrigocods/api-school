@@ -1,5 +1,4 @@
 import { Router } from 'express';
-
 import { SchoolRoutes } from './school/routes';
 
 /**

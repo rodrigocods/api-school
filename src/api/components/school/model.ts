@@ -2,9 +2,9 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class School {
-	constructor(id: number, name: string) {
-		this.id = id;
+	constructor(name: string, id: number = null) {
 		this.name = name;
+		this.id = id;
 	}
 
 	@PrimaryGeneratedColumn()
@@ -15,15 +15,4 @@ export class School {
 		unique: true
 	})
 	public name: string;
-
-
-	static deserialize(obj: School): School {
-		const user: School = new School(obj.id, obj.name);
-		return user;
-	}
-
-	public static mockTestUser(): School {
-		const user = new School(1, 'testSchool');
-		return user;
-	}
 }
