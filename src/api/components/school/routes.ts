@@ -16,7 +16,7 @@ export class SchoolRoutes implements IComponentRoutes<SchoolController> {
 	initRoutes(): void {
 		this.router.get('/', this.controller.readSchools);
 
-		// this.router.get('/:schoolID', this.controller.readSchool);
+		this.router.get('/:schoolID', this.controller.readSchool);
 
 		this.router.post('/', this.controller.createSchool);
 

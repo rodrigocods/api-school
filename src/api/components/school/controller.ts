@@ -15,9 +15,9 @@ export class SchoolController {
 	 */
 	readSchools = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
 		try {
-			const schools: School[] = await this.repo.find();
+			const Schools: Array<School> = await this.repo.find();
 
-			return res.json(schools);
+			return res.json(Schools);
 		} catch (err) {
 			return next(err);
 		}
@@ -31,21 +31,21 @@ export class SchoolController {
 	 * @param next Express next
 	 * @returns HTTP response
 	 */
-	// async readSchool(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
-	// 	try {
-	// 		const { SchoolID } = req.params;
+	readSchool = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+		try {
+			const { schoolID } = req.params;
 
-	// 		const School: School | undefined = await this.repo.read({
-	// 			where: {
-	// 				id: +SchoolID
-	// 			}
-	// 		});
+			const School = await this.repo.find({
+				where: {
+					id: +schoolID
+				}
+			});
 
-	// 		return res.json(School);
-	// 	} catch (err) {
-	// 		return next(err);
-	// 	}
-	// }
+			return res.json(School);
+		} catch (err) {
+			return next(err);
+		}
+	}
 
 	/**
 	 * Create School
