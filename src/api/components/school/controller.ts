@@ -69,9 +69,7 @@ export class SchoolController {
 				return res.status(400).json({ error: 'School name is already taken' });
 			}
 
-			const school: School = new School(
-				name
-			);
+			const school: School = this.repo.create({"name": name})
 
 			const newSchool = await this.repo.insert(school);
 
@@ -91,34 +89,30 @@ export class SchoolController {
 	 * @param next Express next
 	 * @returns HTTP response
 	 */
-	// async updateSchool(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
-	// 	try {
-	// 		const { SchoolID } = req.params;
-	// 		const { name } = req.body;
+	updateSchool = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+		try {
+			const { schoolID } = req.params;
+			const { name } = req.body;
 
-	// 		if (!SchoolID) {
-	// 			return res.status(400).json({ error: 'Invalid request' });
-	// 		}
+			if (!schoolID) {
+				return res.status(400).json({ error: 'Invalid request' });
+			}
 
-	// 		const existingSchool: School | undefined = await this.repo.read({
-	// 			where: {
-	// 				id: +SchoolID
-	// 			}
-	// 		});
+			const school: School = this.repo.create({"name": name});
 
-	// 		if (!existingSchool) {
-	// 			return res.status(404).json({ error: 'School not found' });
-	// 		}
+			const result = await this.repo.update(+schoolID, school);
 
-	// 		existingSchool.name = name;
+			if(result.affected === 0) {
+				return res.status(404).json({error: 'School not found'});
+			}
 
-	// 		const updatedSchool: School = await this.repo.save(existingSchool);
+			school.id = +schoolID;
 
-	// 		return res.json(updatedSchool);
-	// 	} catch (err) {
-	// 		return next(err);
-	// 	}
-	// }
+			return res.json([school]);
+		} catch (err) {
+			return next(err);
+		}
+	}
 
 	/**
 	 * Delete School

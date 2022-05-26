@@ -20,7 +20,7 @@ export class SchoolRoutes implements IComponentRoutes<SchoolController> {
 
 		this.router.post('/', this.controller.createSchool);
 
-		// this.router.put('/:schoolID', this.controller.updateSchool);
+		this.router.put('/:schoolID', this.controller.updateSchool);
 
 		// this.router.delete('/:schoolID', this.controller.deleteSchool);
 	}
