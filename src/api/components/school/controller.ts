@@ -13,15 +13,15 @@ export class SchoolController {
 	 * @param next Express next
 	 * @returns HTTP response
 	 */
-	// async readSchools(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
-	// 	try {
-	// 		const Schools: School[] = await this.repo.readAll();
+	readSchools = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+		try {
+			const schools: School[] = await this.repo.find();
 
-	// 		return res.json(Schools);
-	// 	} catch (err) {
-	// 		return next(err);
-	// 	}
-	// }
+			return res.json(schools);
+		} catch (err) {
+			return next(err);
+		}
+	}
 
 	/**
 	 * Read School
