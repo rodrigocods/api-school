@@ -22,6 +22,6 @@ export class SchoolRoutes implements IComponentRoutes<SchoolController> {
 
 		this.router.put('/:schoolID', this.controller.updateSchool);
 
-		// this.router.delete('/:schoolID', this.controller.deleteSchool);
+		this.router.delete('/:schoolID', this.controller.deleteSchool);
 	}
 }

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { Repository } from 'typeorm';
 import { AppDataSource } from '../../../../database/data-source';
+import { UtilityService } from '../../../services/utility';
 import { School } from './model';
 export class SchoolController {
 	private readonly repo: Repository<School> = AppDataSource.getRepository(School);
@@ -122,25 +123,23 @@ export class SchoolController {
 	 * @param next Express next
 	 * @returns HTTP response
 	 */
-	// async deleteSchool(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
-	// 	try {
-	// 		const { SchoolID } = req.params;
+	deleteSchool = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+		try {
+			const { schoolID } = req.params;
 
-	// 		const School: School | undefined = await this.repo.read({
-	// 			where: {
-	// 				id: +SchoolID
-	// 			}
-	// 		});
+			if (!schoolID || !UtilityService.isJustNumber(schoolID)) {
+				return res.status(400).json({ error: 'Invalid request' });
+			}
 
-	// 		if (!School) {
-	// 			return res.status(404).json({ error: 'School not found' });
-	// 		}
+			const result = await this.repo.delete(+schoolID);
 
-	// 		await this.repo.delete(School);
+			if(result.affected === 0) {
+				return res.status(404).json({ error: 'School not found' });
+			}
 
-	// 		return res.status(204).send();
-	// 	} catch (err) {
-	// 		return next(err);
-	// 	}
-	// }
+			return res.status(204).send();
+		} catch (err) {
+			return next(err);
+		}
+	}
 }
