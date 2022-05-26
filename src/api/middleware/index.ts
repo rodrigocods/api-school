@@ -2,7 +2,7 @@ import * as compression from 'compression';
 import * as cors from 'cors';
 import helmet from 'helmet';
 
-import { json, Router } from 'express';
+import { json, Request, Response, Router } from 'express';
 
 import { env } from '../../config/globals';
 
@@ -23,4 +23,16 @@ export function registerMiddleware(router: Router): void {
 
 	router.use(json());
 	router.use(compression());
+}
+
+/**
+ * Init Express error middleware
+ *
+ * @param {Router} router
+ * @returns {void}
+ */
+export function registerErrorMiddleware(router: Router): void {
+	router.use((error, req: Request, res: Response, next) => {
+		res.status(500).json({"error": "Failed in server"});
+	})
 }

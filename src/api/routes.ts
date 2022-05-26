@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 
 import { registerApiRoutes } from './components';
-import { registerMiddleware } from './middleware';
+import { registerErrorMiddleware, registerMiddleware } from './middleware';
 
 /**
  * Init Express REST routes
@@ -16,4 +16,5 @@ export function initRestRoutes(router: Router): void {
 
 	registerMiddleware(router);
 	registerApiRoutes(router, prefix);
+	registerErrorMiddleware(router);
 }
