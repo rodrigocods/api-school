@@ -26,4 +26,26 @@ export class UtilityService {
 	public static generateUuid(): string {
 		return uuidv1();
 	}
+
+	/**
+	 * Verify if the string has only numbers
+	 * 
+	 * @param text String to verify
+	 * @returns Result of validation
+	 */
+	 public static isJustNumber(text: string): boolean {
+		const regExp = /\D/g;
+
+		// search for any other character than a decimal digit in string
+		if(regExp.test(text)) {
+			return false;
+		}
+
+		// is empty string?
+		if(text.length === 0) {
+			return false;
+		}
+
+		return true;
+	}
 }
