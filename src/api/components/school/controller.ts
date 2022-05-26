@@ -59,15 +59,13 @@ export class SchoolController {
 		try {
 			const { name } = req.body;
 
-			const existingSchool: School | School[] = await this.repo.find({
+			const existingSchool: Array<School> = await this.repo.find({
 				where: {
 					name
 				}
 			});
 
-			console.log(existingSchool);
-
-			if (!existingSchool) {
+			if (existingSchool.length > 0) {
 				return res.status(400).json({ error: 'School name is already taken' });
 			}
 
@@ -77,7 +75,9 @@ export class SchoolController {
 
 			const newSchool = await this.repo.insert(school);
 
-			return res.json(newSchool);
+			school.id = newSchool.identifiers[0].id;
+
+			return res.json(school);
 		} catch (err) {
 			return next(err);
 		}
