@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import { AppDataSource } from '../../../../database/data-source';
 import { UtilityService } from '../../../services/utility';
 import { Student } from './model';
+import { createHash, createHmac } from 'crypto';
 export class StudentController {
 	private readonly repo: Repository<Student> = AppDataSource.getRepository(Student);
 
@@ -60,17 +61,17 @@ export class StudentController {
 		try {
 			const { name, email, password, school_id } = req.body;
 
-			const existingStudent: Array<Student> = await this.repo.find({
-				where: {
-					email
-				}
-			});
+			const student: Student = this.repo.create({
+                name,
+                email,
+                password,
+                school_id
+            })
 
-			if (existingStudent.length > 0) {
-				return res.status(400).json({ error: 'Student email is already taken' });
-			}
+            const hash = createHmac("sha256", process.env.SECRET).update(student.password).digest("hex");
 
-			const student: Student = this.repo.create({"name": name})
+            console.log(hash);
+            console.log()
 
 			const newStudent = await this.repo.insert(student);
 
@@ -93,13 +94,18 @@ export class StudentController {
 	updateStudent = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
 		try {
 			const { studentID } = req.params;
-			const { name } = req.body;
+			const { name, email, password, school_id } = req.body;
 
 			if (!studentID) {
 				return res.status(400).json({ error: 'Invalid request' });
 			}
 
-			const student: Student = this.repo.create({"name": name});
+			const student: Student = this.repo.create({
+                name,
+                email,
+                password,
+                school_id
+            });
 
 			const result = await this.repo.update(+studentID, student);
 

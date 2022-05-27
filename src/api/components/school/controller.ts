@@ -60,16 +60,6 @@ export class SchoolController {
 		try {
 			const { name } = req.body;
 
-			const existingSchool: Array<School> = await this.repo.find({
-				where: {
-					name
-				}
-			});
-
-			if (existingSchool.length > 0) {
-				return res.status(400).json({ error: 'School name is already taken' });
-			}
-
 			const school: School = this.repo.create({"name": name})
 
 			const newSchool = await this.repo.insert(school);
