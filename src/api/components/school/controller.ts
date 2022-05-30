@@ -60,7 +60,7 @@ export class SchoolController {
 		try {
 			const { name } = req.body;
 
-			const school: School = this.repo.create({"name": name})
+			const school: School = this.repo.create({ name });
 
 			const newSchool = await this.repo.insert(school);
 
