@@ -4,6 +4,7 @@ import { AppDataSource } from '../../../../database/data-source';
 import { UtilityService } from '../../../services/utility';
 import { Student } from './model';
 import { createHash, createHmac } from 'crypto';
+import { env } from '../../../config/globals';
 export class StudentController {
 	private readonly repo: Repository<Student> = AppDataSource.getRepository(Student);
 
@@ -66,12 +67,11 @@ export class StudentController {
                 email,
                 password,
                 school_id
-            })
+            });
 
-            const hash = createHmac("sha256", process.env.SECRET).update(student.password).digest("hex");
+            const hash = createHmac("sha256", env.SECRET).update(student.password).digest("hex");
 
-            console.log(hash);
-            console.log()
+            student.password = hash;
 
 			const newStudent = await this.repo.insert(student);
 
@@ -106,6 +106,10 @@ export class StudentController {
                 password,
                 school_id
             });
+
+			const hash = createHmac("sha256", env.SECRET).update(student.password).digest("hex");
+
+            student.password = hash;
 
 			const result = await this.repo.update(+studentID, student);
 
