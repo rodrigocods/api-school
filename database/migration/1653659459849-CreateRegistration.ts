@@ -32,7 +32,7 @@ export class CreateRegistration1653659459849 implements MigrationInterface {
                         type: "int"
                     },
                     {
-                        name: "class_id",
+                        name: "school_class_id",
                         type: "int"
                     }
                 ]
@@ -60,9 +60,9 @@ export class CreateRegistration1653659459849 implements MigrationInterface {
         await queryRunner.createForeignKey(
             "registration",
             new TableForeignKey({
-                columnNames: ["class_id"],
+                columnNames: ["school_class_id"],
                 referencedColumnNames: ["id"],
-                referencedTableName: "class"
+                referencedTableName: "school_class"
             })
         );
     }
