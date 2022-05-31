@@ -5,6 +5,7 @@ import { UtilityService } from '../../../services/utility';
 import { Student } from './model';
 import { createHash, createHmac } from 'crypto';
 import { env } from '../../../config/globals';
+import { School } from '../school/model';
 export class StudentController {
 	private readonly repo: Repository<Student> = AppDataSource.getRepository(Student);
 
@@ -65,9 +66,11 @@ export class StudentController {
 			const student: Student = this.repo.create({
                 name,
                 email,
-                password,
-                school_id
+                password
             });
+
+			student.school = new School();
+			student.school.id = school_id;
 
             const hash = createHmac("sha256", env.SECRET).update(student.password).digest("hex");
 
@@ -103,9 +106,11 @@ export class StudentController {
 			const student: Student = this.repo.create({
                 name,
                 email,
-                password,
-                school_id
+                password
             });
+
+			student.school = new School();
+			student.school.id = school_id;
 
 			const hash = createHmac("sha256", env.SECRET).update(student.password).digest("hex");
 
