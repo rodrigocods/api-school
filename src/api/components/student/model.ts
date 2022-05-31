@@ -7,7 +7,7 @@ export class Student {
 	public id: number;
 
 	@Column({
-		length: 100
+		length: 80
 	})
 	public name: string;
 
