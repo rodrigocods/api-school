@@ -48,4 +48,9 @@ export class UtilityService {
 
 		return true;
 	}
+
+	public static convDoisDigitos(number: string): string
+	{
+		return (("0"+(number)).slice(-2));
+	}
 }
