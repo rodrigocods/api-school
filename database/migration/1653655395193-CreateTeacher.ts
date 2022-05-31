@@ -22,7 +22,8 @@ export class CreateTeacher1653655395193 implements MigrationInterface {
                     {
                         name: "email",
                         type: "varchar",
-                        length: "100"
+                        length: "100",
+                        isUnique: true
                     },
                     {
                         name: "password",
