@@ -22,7 +22,7 @@ export class Teacher {
 	})
     public password: string;
 
-	@ManyToOne(() => School, (school) => school.students)
+	@ManyToOne(() => School, (school) => school.teachers)
 	@JoinColumn({ name: "school_id" })
 	school: School
 }

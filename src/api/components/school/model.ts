@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Student } from '../student/model';
+import { Teacher } from '../teacher/model';
 
 @Entity()
 export class School {
@@ -12,6 +13,9 @@ export class School {
 	})
 	public name: string;
 
-	@OneToMany(() => Student, (student) => student.school, { eager: true })
+	@OneToMany(() => Student, (student) => student.school)
     students: Student[]
+
+	@OneToMany(() => Teacher, (teacher) => teacher.school)
+    teachers: Teacher[]
 }
