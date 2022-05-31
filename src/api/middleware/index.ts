@@ -18,6 +18,7 @@ export function registerMiddleware(router: Router): void {
  */
 export function registerErrorMiddleware(router: Router): void {
 	router.use((error, req: Request, res: Response, next) => {
+		console.log(error);
 		res.status(500).json({"error": "Failed in server"});
 	})
 }

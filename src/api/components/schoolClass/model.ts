@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Registration } from '../registration/model';
 
 @Entity()
 export class SchoolClass {
@@ -10,4 +11,7 @@ export class SchoolClass {
 		unique: true
 	})
 	public name: string;
+
+	@OneToMany(() => Registration, (registration) => registration.school)
+    registrations: Registration[]
 }
