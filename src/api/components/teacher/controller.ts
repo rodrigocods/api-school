@@ -72,7 +72,7 @@ export class TeacherController {
 			teacher.school = new School();
 			teacher.school.id = school_id;
 
-            const hash = createHmac("sha256", env.SECRET).update(teacher.password).digest("hex");
+            const hash = createHmac("sha256", process.env.SECRET).update(teacher.password).digest("hex");
 
             teacher.password = hash;
 
@@ -112,7 +112,7 @@ export class TeacherController {
 			teacher.school = new School();
 			teacher.school.id = school_id;
 
-			const hash = createHmac("sha256", env.SECRET).update(teacher.password).digest("hex");
+			const hash = createHmac("sha256", process.env.SECRET).update(teacher.password).digest("hex");
 
             teacher.password = hash;
 

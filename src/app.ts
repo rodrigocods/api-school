@@ -5,7 +5,6 @@ import { config } from 'dotenv';
 config();
 
 import * as express from 'express';
-import { env } from './config/globals';
 import { Server } from './api/server';
 import { AppDataSource } from '../database/data-source';
 
@@ -22,6 +21,6 @@ AppDataSource.initialize()
 
 
 // Start express server
-app.listen(env.NODE_PORT, () => {
-    console.log(`Server is running on port ${env.NODE_PORT}...`);
+app.listen(process.env.NODE_PORT, () => {
+    console.log(`Server is running on port ${process.env.NODE_PORT}...`);
 });
