@@ -4,7 +4,6 @@ import { AppDataSource } from '../../../../database/data-source';
 import { UtilityService } from '../../../services/utility';
 import { Teacher } from './model';
 import { createHmac } from 'crypto';
-import { env } from '../../../config/globals';
 import { School } from '../school/model';
 export class TeacherController {
 	private readonly repo: Repository<Teacher> = AppDataSource.getRepository(Teacher);
