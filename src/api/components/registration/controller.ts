@@ -4,7 +4,6 @@ import { AppDataSource } from '../../../../database/data-source';
 import { UtilityService } from '../../../services/utility';
 import { Registration } from './model';
 import { createHmac } from 'crypto';
-import { env } from '../../../config/globals';
 import { School } from '../school/model';
 import { Student } from '../student/model';
 import { SchoolClass } from '../schoolClass/model';
