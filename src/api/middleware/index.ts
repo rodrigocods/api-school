@@ -1,4 +1,4 @@
-import { json, Request, Response, Router } from 'express';
+import { json, NextFunction, Request, Response, Router } from 'express';
 
 /**
  * Init Express middleware
@@ -17,7 +17,7 @@ export function registerMiddleware(router: Router): void {
  * @returns {void}
  */
 export function registerErrorMiddleware(router: Router): void {
-	router.use((error, req: Request, res: Response, next) => {
+	router.use((error, req: Request, res: Response, next: NextFunction) => {
 		console.log(error);
 		res.status(500).json({"error": "Failed in server"});
 	})

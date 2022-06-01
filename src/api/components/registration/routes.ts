@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import jwtMiddleware from '../../middleware/jwtMiddleware';
 
 import { IComponentRoutes } from '../helper';
 
@@ -14,14 +15,14 @@ export class RegistrationRoutes implements IComponentRoutes<RegistrationControll
 	}
 
 	initRoutes(): void {
-		this.router.get('/', this.controller.readRegistrations);
+		this.router.get('/', jwtMiddleware.verifyJWT, this.controller.readRegistrations);
 
-		this.router.get('/:registrationID', this.controller.readRegistration);
+		this.router.get('/:registrationID', jwtMiddleware.verifyJWT, this.controller.readRegistration);
 
-		this.router.post('/', this.controller.createRegistration);
+		this.router.post('/', jwtMiddleware.verifyJWT, this.controller.createRegistration);
 
-		this.router.put('/:registrationID', this.controller.updateRegistration);
+		this.router.put('/:registrationID', jwtMiddleware.verifyJWT, this.controller.updateRegistration);
 
-		this.router.delete('/:registrationID', this.controller.deleteRegistration);
+		this.router.delete('/:registrationID', jwtMiddleware.verifyJWT, this.controller.deleteRegistration);
 	}
 }

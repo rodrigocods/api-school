@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import jwtMiddleware from '../../middleware/jwtMiddleware';
 
 import { IComponentRoutes } from '../helper';
 
@@ -14,14 +15,14 @@ export class TeacherRoutes implements IComponentRoutes<TeacherController> {
 	}
 
 	initRoutes(): void {
-		this.router.get('/', this.controller.readTeachers);
+		this.router.get('/', jwtMiddleware.verifyJWT, this.controller.readTeachers);
 
-		this.router.get('/:teacherID', this.controller.readTeacher);
+		this.router.get('/:teacherID', jwtMiddleware.verifyJWT, this.controller.readTeacher);
 
-		this.router.post('/', this.controller.createTeacher);
+		this.router.post('/', jwtMiddleware.verifyJWT, this.controller.createTeacher);
 
-		this.router.put('/:teacherID', this.controller.updateTeacher);
+		this.router.put('/:teacherID', jwtMiddleware.verifyJWT, this.controller.updateTeacher);
 
-		this.router.delete('/:teacherID', this.controller.deleteTeacher);
+		this.router.delete('/:teacherID', jwtMiddleware.verifyJWT, this.controller.deleteTeacher);
 	}
 }
