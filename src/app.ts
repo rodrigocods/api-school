@@ -5,21 +5,22 @@ import { config } from 'dotenv';
 config();
 
 import * as express from 'express';
-
-import { createServer, Server as HttpServer } from 'http';
-
-import { env } from './config/globals';
-
 import { Server } from './api/server';
-
-// Startup
-
-// Connect db
-// const connection: Connection = createConnection();
+import { AppDataSource } from '../database/data-source';
 
 // Init express server
 const app: express.Application = new Server().app;
-const server: HttpServer = createServer(app);
+
+AppDataSource.initialize()
+    .then(() => {
+        console.log("Data Source has been initialized!")
+    })
+    .catch((err) => {
+        console.error("Error during Data Source initialization", err)
+    });
+
 
 // Start express server
-server.listen(env.NODE_PORT);
+app.listen(process.env.NODE_PORT, () => {
+    console.log(`Server is running on port ${process.env.NODE_PORT}...`);
+});

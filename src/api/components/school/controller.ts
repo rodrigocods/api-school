@@ -1,9 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
+import { Repository } from 'typeorm';
+import { AppDataSource } from '../../../../database/data-source';
+import { UtilityService } from '../../../services/utility';
 import { School } from './model';
-import { SchoolRepository } from './repository';
-
 export class SchoolController {
-	private readonly repo: SchoolRepository = new SchoolRepository();
+	private readonly repo: Repository<School> = AppDataSource.getRepository(School);
 
 	/**
 	 * Read Schools
@@ -13,9 +14,9 @@ export class SchoolController {
 	 * @param next Express next
 	 * @returns HTTP response
 	 */
-	async readSchools(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+	readSchools = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
 		try {
-			const Schools: School[] = await this.repo.readAll({}, true);
+			const Schools: Array<School> = await this.repo.find();
 
 			return res.json(Schools);
 		} catch (err) {
@@ -31,13 +32,13 @@ export class SchoolController {
 	 * @param next Express next
 	 * @returns HTTP response
 	 */
-	async readSchool(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+	readSchool = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
 		try {
-			const { SchoolID } = req.params;
+			const { schoolID } = req.params;
 
-			const School: School | undefined = await this.repo.read({
+			const School = await this.repo.find({
 				where: {
-					id: +SchoolID
+					id: +schoolID
 				}
 			});
 
@@ -55,27 +56,17 @@ export class SchoolController {
 	 * @param next Express next
 	 * @returns HTTP response
 	 */
-	async createSchool(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+	createSchool = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
 		try {
 			const { name } = req.body;
+			
+			const school: School = this.repo.create({ name });
 
-			const existingSchool: School | undefined = await this.repo.read({
-				where: {
-					name
-				}
-			});
+			const newSchool = await this.repo.insert(school);
 
-			if (existingSchool) {
-				return res.status(400).json({ error: 'School name is already taken' });
-			}
+			school.id = newSchool.identifiers[0].id;
 
-			const school: School = new School(
-				undefined,
-				name
-			);
-			const newSchool: School = await this.repo.save(school);
-
-			return res.json(newSchool);
+			return res.json(school);
 		} catch (err) {
 			return next(err);
 		}
@@ -89,30 +80,26 @@ export class SchoolController {
 	 * @param next Express next
 	 * @returns HTTP response
 	 */
-	async updateSchool(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+	updateSchool = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
 		try {
-			const { SchoolID } = req.params;
+			const { schoolID } = req.params;
 			const { name } = req.body;
 
-			if (!SchoolID) {
+			if (!schoolID) {
 				return res.status(400).json({ error: 'Invalid request' });
 			}
 
-			const existingSchool: School | undefined = await this.repo.read({
-				where: {
-					id: +SchoolID
-				}
-			});
+			const school: School = this.repo.create({"name": name});
 
-			if (!existingSchool) {
-				return res.status(404).json({ error: 'School not found' });
+			const result = await this.repo.update(+schoolID, school);
+
+			if(result.affected === 0) {
+				return res.status(404).json({error: 'School not found'});
 			}
 
-			existingSchool.name = name;
+			school.id = +schoolID;
 
-			const updatedSchool: School = await this.repo.save(existingSchool);
-
-			return res.json(updatedSchool);
+			return res.json([school]);
 		} catch (err) {
 			return next(err);
 		}
@@ -126,21 +113,19 @@ export class SchoolController {
 	 * @param next Express next
 	 * @returns HTTP response
 	 */
-	async deleteSchool(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+	deleteSchool = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
 		try {
-			const { SchoolID } = req.params;
+			const { schoolID } = req.params;
 
-			const School: School | undefined = await this.repo.read({
-				where: {
-					id: +SchoolID
-				}
-			});
-
-			if (!School) {
-				return res.status(404).json({ error: 'School not found' });
+			if (!schoolID || !UtilityService.isJustNumber(schoolID)) {
+				return res.status(400).json({ error: 'Invalid request' });
 			}
 
-			await this.repo.delete(School);
+			const result = await this.repo.delete(+schoolID);
+
+			if(result.affected === 0) {
+				return res.status(404).json({ error: 'School not found' });
+			}
 
 			return res.status(204).send();
 		} catch (err) {

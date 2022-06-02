@@ -1,10 +1,8 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Registration } from '../registration/model';
-import { Student } from '../student/model';
-import { Teacher } from '../teacher/model';
 
 @Entity()
-export class School {
+export class SchoolClass {
 	@PrimaryGeneratedColumn({ type: "int" })
 	public id: number;
 
@@ -14,12 +12,6 @@ export class School {
 	})
 	public name: string;
 
-	@OneToMany(() => Student, (student) => student.school)
-    students: Student[]
-
 	@OneToMany(() => Registration, (registration) => registration.school)
     registrations: Registration[]
-	
-	@OneToMany(() => Teacher, (teacher) => teacher.school)
-    teachers: Teacher[]
 }

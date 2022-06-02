@@ -17,8 +17,7 @@ export class CreateSchool1652898697996 implements MigrationInterface {
                     {
                         name: "name",
                         type: "varchar",
-                        length: "255",
-                        default: null
+                        length: "255"
                     }
                 ]
             })
