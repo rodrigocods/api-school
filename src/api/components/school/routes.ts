@@ -19,10 +19,10 @@ export class SchoolRoutes implements IComponentRoutes<SchoolController> {
 
 		this.router.get('/:schoolID', jwtMiddleware.verifyJWT, this.controller.readSchool);
 
-		this.router.post('/', jwtMiddleware.verifyJWT, this.controller.createSchool);
+		// this.router.post('/', jwtMiddleware.verifyJWT, this.controller.createSchool);
 
 		this.router.put('/:schoolID', jwtMiddleware.verifyJWT, this.controller.updateSchool);
 
-		this.router.delete('/:schoolID', jwtMiddleware.verifyJWT, this.controller.deleteSchool);
+		// this.router.delete('/:schoolID', jwtMiddleware.verifyJWT, this.controller.deleteSchool);
 	}
 }
