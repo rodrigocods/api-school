@@ -1,15 +1,10 @@
-import {
-  MigrationInterface,
-  QueryRunner,
-  Table,
-  TableForeignKey,
-} from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
-export class CreateSchoolClass1653654044105 implements MigrationInterface {
+export class CreateUserGroup1652427732171 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: "school_class",
+        name: "user_group",
         columns: [
           {
             name: "id",
@@ -19,10 +14,9 @@ export class CreateSchoolClass1653654044105 implements MigrationInterface {
             isPrimary: true,
           },
           {
-            name: "description",
-            type: "text",
-            isNullable: true,
-            default: null,
+            name: "name",
+            type: "varchar",
+            length: "100",
           },
         ],
       })
@@ -30,6 +24,6 @@ export class CreateSchoolClass1653654044105 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable("school_class");
+    await queryRunner.dropTable("user-group");
   }
 }
