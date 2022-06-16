@@ -17,7 +17,7 @@ export class RegistrationController {
    * @param next Express next
    * @returns HTTP response
    */
-  readRegistrations = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+  async readRegistrations(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
       const Registrations: Array<Registration> = await this.repo.find();
 
@@ -35,7 +35,7 @@ export class RegistrationController {
    * @param next Express next
    * @returns HTTP response
    */
-  readRegistration = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+  async readRegistration(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
       const { registrationID } = req.params;
 
@@ -59,7 +59,7 @@ export class RegistrationController {
    * @param next Express next
    * @returns HTTP response
    */
-  createRegistration = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+  async createRegistration(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
       const { registration_number, registration_date, student_id, school_id, school_class_id } = req.body;
 
@@ -99,12 +99,12 @@ export class RegistrationController {
    * @param next Express next
    * @returns HTTP response
    */
-  updateRegistration = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+  async updateRegistration(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
       const { registrationID } = req.params;
       const { registration_number, registration_date, student_id, school_id, school_class_id } = req.body;
 
-      if (!registrationID) {
+      if(!registrationID) {
         return res.status(400).json({ error: 'Invalid request' });
       }
 
@@ -128,7 +128,7 @@ export class RegistrationController {
 
       const result = await this.repo.update(+registrationID, registration);
 
-      if (result.affected === 0) {
+      if(result.affected === 0) {
         return res.status(404).json({ error: 'Registration not found' });
       }
 
@@ -148,17 +148,17 @@ export class RegistrationController {
    * @param next Express next
    * @returns HTTP response
    */
-  deleteRegistration = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+  async deleteRegistration(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
       const { registrationID } = req.params;
 
-      if (!registrationID || !StringUtility.isJustNumber(registrationID)) {
+      if(!registrationID || !StringUtility.isJustNumber(registrationID)) {
         return res.status(400).json({ error: 'Invalid request' });
       }
 
       const result = await this.repo.delete(+registrationID);
 
-      if (result.affected === 0) {
+      if(result.affected === 0) {
         return res.status(404).json({ error: 'Registration not found' });
       }
 

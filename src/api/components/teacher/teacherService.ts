@@ -5,7 +5,7 @@ import { Teacher } from "./teacher";
 class TeacherService {
   private readonly repo: Repository<Teacher> = AppDataSource.getRepository(Teacher);
 
-  teacherLogin = async (email: string, password: string) => {
+  async teacherLogin(email: string, password: string) {
     try {
       const teacher = await this.repo.find({
         where: {
