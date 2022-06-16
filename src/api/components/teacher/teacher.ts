@@ -1,8 +1,8 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { School } from '../school/model';
+import { School } from '../school/school';
 
 @Entity()
-export class Student {
+export class Teacher {
 	@PrimaryGeneratedColumn({ type: "int" })
 	public id: number;
 
@@ -22,7 +22,7 @@ export class Student {
 	})
     public password: string;
 
-	@ManyToOne(() => School, (school) => school.students)
+	@ManyToOne(() => School, (school) => school.teachers)
 	@JoinColumn({ name: "school_id" })
 	school: School
 }

@@ -3,11 +3,11 @@ import { v1 as uuidv1 } from 'uuid';
 import * as crypto from 'crypto';
 
 /**
- * UtilityService
+ * Utility
  *
- * Service for utility functions
+ * Utility functions
  */
-export class UtilityService {
+export class StringUtility {
 	/**
 	 * Hash string with sha256 algorithm
 	 *
@@ -49,8 +49,7 @@ export class UtilityService {
 		return true;
 	}
 
-	public static convDoisDigitos(number: string): string
-	{
+	public static convDoisDigitos(number: string): string {
 		return (("0"+(number)).slice(-2));
 	}
 }

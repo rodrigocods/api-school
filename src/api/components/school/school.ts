@@ -1,7 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Registration } from '../registration/model';
-import { Student } from '../student/model';
-import { Teacher } from '../teacher/model';
+import { Registration } from '../registration/registration';
+import { Student } from '../student/student';
+import { Teacher } from '../teacher/teacher';
 
 @Entity()
 export class School {

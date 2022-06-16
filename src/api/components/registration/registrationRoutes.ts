@@ -3,7 +3,7 @@ import jwtMiddleware from '../../middleware/jwtMiddleware';
 
 import { IComponentRoutes } from '../helper';
 
-import { RegistrationController } from './controller';
+import { RegistrationController } from './registrationController';
 
 export class RegistrationRoutes implements IComponentRoutes<RegistrationController> {
 	readonly name: string = 'registration';

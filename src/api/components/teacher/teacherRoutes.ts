@@ -3,7 +3,7 @@ import jwtMiddleware from '../../middleware/jwtMiddleware';
 
 import { IComponentRoutes } from '../helper';
 
-import { TeacherController } from './controller';
+import { TeacherController } from './teacherController';
 
 export class TeacherRoutes implements IComponentRoutes<TeacherController> {
 	readonly name: string = 'teacher';
