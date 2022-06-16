@@ -11,12 +11,12 @@ interface loginReq {
 }
 
 export class AuthController {
-  login = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+  async login(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
     try {
       const { userType, email, password }: loginReq = req.body;
       const hash = createHmac("sha256", process.env.SECRET).update(password).digest("hex");
 
-      switch (userType) {
+      switch(userType) {
         case "teacher":
           const teacher = await TeacherService.teacherLogin(email, hash);
 
@@ -42,7 +42,7 @@ export class AuthController {
 
           return res.status(500).json({ message: 'Email or Password incorrect!' });
       }
-    } catch (err) {
+    } catch(err) {
       return next(err);
     }
   }

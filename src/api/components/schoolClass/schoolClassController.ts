@@ -14,7 +14,7 @@ export class SchoolClassController {
 	 * @param next Express next
 	 * @returns HTTP response
 	 */
-	readSchoolClasses = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+	async readSchoolClasses(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
 		try {
 			const SchoolClasses: Array<SchoolClass> = await this.repo.find();
 
@@ -32,7 +32,7 @@ export class SchoolClassController {
 	 * @param next Express next
 	 * @returns HTTP response
 	 */
-	readSchoolClass = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+	async readSchoolClass(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
 		try {
 			const { schoolClassID } = req.params;
 
@@ -56,7 +56,7 @@ export class SchoolClassController {
 	 * @param next Express next
 	 * @returns HTTP response
 	 */
-	createSchoolClass = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+	async createSchoolClass(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
 		try {
 			const { name } = req.body;
 			
@@ -80,12 +80,12 @@ export class SchoolClassController {
 	 * @param next Express next
 	 * @returns HTTP response
 	 */
-	updateSchoolClass = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+	async updateSchoolClass(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
 		try {
 			const { schoolClassID } = req.params;
 			const { name } = req.body;
 
-			if (!schoolClassID) {
+			if(!schoolClassID) {
 				return res.status(400).json({ error: 'Invalid request' });
 			}
 
@@ -113,11 +113,11 @@ export class SchoolClassController {
 	 * @param next Express next
 	 * @returns HTTP response
 	 */
-	deleteSchoolClass = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+	async deleteSchoolClass(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
 		try {
 			const { schoolClassID } = req.params;
 
-			if (!schoolClassID || !StringUtility.isJustNumber(schoolClassID)) {
+			if(!schoolClassID || !StringUtility.isJustNumber(schoolClassID)) {
 				return res.status(400).json({ error: 'Invalid request' });
 			}
 

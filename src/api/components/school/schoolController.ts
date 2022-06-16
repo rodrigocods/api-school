@@ -14,7 +14,7 @@ export class SchoolController {
 	 * @param next Express next
 	 * @returns HTTP response
 	 */
-	readSchools = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+	async readSchools(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
 		try {
 			const Schools: Array<School> = await this.repo.find();
 
@@ -32,7 +32,7 @@ export class SchoolController {
 	 * @param next Express next
 	 * @returns HTTP response
 	 */
-	readSchool = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+	async readSchool(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
 		try {
 			const { schoolID } = req.params;
 
@@ -56,7 +56,7 @@ export class SchoolController {
 	 * @param next Express next
 	 * @returns HTTP response
 	 */
-	createSchool = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+	async createSchool(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
 		try {
 			const { name } = req.body;
 			
@@ -80,7 +80,7 @@ export class SchoolController {
 	 * @param next Express next
 	 * @returns HTTP response
 	 */
-	updateSchool = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+	async updateSchool(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
 		try {
 			const { schoolID } = req.params;
 			const { name } = req.body;
@@ -113,11 +113,11 @@ export class SchoolController {
 	 * @param next Express next
 	 * @returns HTTP response
 	 */
-	deleteSchool = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+	async deleteSchool(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
 		try {
 			const { schoolID } = req.params;
 
-			if (!schoolID || !StringUtility.isJustNumber(schoolID)) {
+			if(!schoolID || !StringUtility.isJustNumber(schoolID)) {
 				return res.status(400).json({ error: 'Invalid request' });
 			}
 
