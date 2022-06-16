@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
 import { Repository } from 'typeorm';
 import { AppDataSource } from '../../../../database/data-source';
-import { UtilityService } from '../../../services/utility';
-import { Teacher } from './model';
+import { StringUtility } from '../../../utility/stringUtility';
+import { Teacher } from './teacher';
 import { createHmac } from 'crypto';
-import { School } from '../school/model';
+import { School } from '../school/school';
 export class TeacherController {
 	private readonly repo: Repository<Teacher> = AppDataSource.getRepository(Teacher);
 
@@ -141,7 +141,7 @@ export class TeacherController {
 		try {
 			const { teacherID } = req.params;
 
-			if (!teacherID || !UtilityService.isJustNumber(teacherID)) {
+			if (!teacherID || !StringUtility.isJustNumber(teacherID)) {
 				return res.status(400).json({ error: 'Invalid request' });
 			}
 

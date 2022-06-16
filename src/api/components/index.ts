@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { SchoolClassRoutes } from './schoolClass/routes';
-import { SchoolRoutes } from './school/routes';
-import { StudentRoutes } from './student/routes';
-import { RegistrationRoutes } from './registration/routes';
-import { TeacherRoutes } from './teacher/routes';
-import { AuthRoutes } from './auth/routes';
+import { SchoolClassRoutes } from './schoolClass/schoolClassRoutes';
+import { SchoolRoutes } from './school/schoolRoutes';
+import { StudentRoutes } from './student/studentRoutes';
+import { RegistrationRoutes } from './registration/registrationRoutes';
+import { TeacherRoutes } from './teacher/teacherRoutes';
+import { AuthRoutes } from './auth/authRoutes';
 
 /**
  * Init component routes

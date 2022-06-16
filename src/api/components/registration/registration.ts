@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { School } from '../school/model';
-import { SchoolClass } from '../schoolClass/model';
-import { Student } from '../student/model';
+import { School } from '../school/school';
+import { SchoolClass } from '../schoolClass/schoolClass';
+import { Student } from '../student/student';
 
 @Entity()
 export class Registration {

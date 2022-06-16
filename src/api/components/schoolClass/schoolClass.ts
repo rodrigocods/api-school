@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Registration } from '../registration/model';
+import { Registration } from '../registration/registration';
 
 @Entity()
 export class SchoolClass {

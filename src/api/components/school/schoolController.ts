@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { Repository } from 'typeorm';
 import { AppDataSource } from '../../../../database/data-source';
-import { UtilityService } from '../../../services/utility';
-import { School } from './model';
+import { StringUtility } from '../../../utility/stringUtility';
+import { School } from './school';
 export class SchoolController {
 	private readonly repo: Repository<School> = AppDataSource.getRepository(School);
 
@@ -117,7 +117,7 @@ export class SchoolController {
 		try {
 			const { schoolID } = req.params;
 
-			if (!schoolID || !UtilityService.isJustNumber(schoolID)) {
+			if (!schoolID || !StringUtility.isJustNumber(schoolID)) {
 				return res.status(400).json({ error: 'Invalid request' });
 			}
 

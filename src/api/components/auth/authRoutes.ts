@@ -2,7 +2,7 @@ import { Router, Request } from 'express';
 
 import { IComponentRoutes } from '../helper';
 
-import { AuthController } from './controller';
+import { AuthController } from './authController';
 
 export class AuthRoutes implements IComponentRoutes<AuthController> {
 	readonly name: string = 'auth';
